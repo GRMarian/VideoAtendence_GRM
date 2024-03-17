@@ -1,0 +1,33 @@
+
+import cv2
+import os 
+import random
+import numpy as np
+from skimage import exposure
+from matplotlib import pyplot as plt
+from PIL import Image
+plt.rcParams.update({'figure.max_open_warning': 0})
+from alexnet_pytorch import AlexNet
+
+program_folder_path = os.getcwd()
+directory_name = "Photo_saved"
+directory_path = os.path.join(program_folder_path, directory_name)
+
+
+try:
+    saved_photos = os.listdir(directory_path)
+    for jpeg in saved_photos:
+        photo_path = os.path.join(directory_path, jpeg)
+        photo = cv2.imread(photo_path)
+        if os.path.isfile(photo_path):
+            cv2.imshow(f'{jpeg}',photo)
+        else:
+            print(f'{jpeg} is not an file')
+except OSError:
+     print("Error occurred while accesing jpgs.")
+
+while True:
+     if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cv2.destroyAllWindows()
